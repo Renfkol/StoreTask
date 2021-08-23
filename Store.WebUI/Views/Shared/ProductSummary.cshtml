@@ -1,0 +1,33 @@
+﻿@model Store.Domain.Entities.Product
+
+
+<div class="well">
+    @if (Model.ImageData != null)
+    {
+        <div class="pull-left" style="margin-right: 10px">
+            @Html.Raw("<img style='width:75px; height:75px;' src=\"data:image/png;base64,"
+                                   + Convert.ToBase64String(Model.ImageData) + "\" ")/>
+        </div>
+    }else
+    {
+        <div class="pull-left" style="margin-right: 10px">
+            <div style='line-height:75px; width:75px; height:75px; background-color:cadetblue; border-radius:10px; text-align:center; vertical-align:middle;'>
+                Icon
+            </div>
+        </div>
+    }
+
+    <h3>
+        <strong>@Model.Name</strong>
+        <span class="pull-right label label-primary">@Model.Price.ToString("# руб")</span>
+    </h3>
+    @using (Html.BeginForm("AddToCart", "Cart"))
+    {
+        <div class="pull-right">
+            @Html.HiddenFor(p => p.ProductId)
+            @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+            <input type="submit" class="btn btn-success" value="Добавить в корзину" />
+        </div>
+    }
+    <span class="lead">@Model.Description</span>
+</div>

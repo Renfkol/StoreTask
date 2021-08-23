@@ -1,0 +1,13 @@
+﻿@model IEnumerable<string>
+
+@{
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+    ViewBag.Title = "GetMyRole";
+}
+
+<h2>Роли пользователя:</h2>
+
+@foreach(var item in Model)
+{
+    <p class="label label-primary">@item</p>
+}

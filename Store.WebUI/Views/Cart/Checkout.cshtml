@@ -1,0 +1,45 @@
+﻿@model Store.Domain.Entities.ShippingDetails
+
+@{
+    ViewBag.Title = "Форма заказа";
+}
+
+<h2>Пожалуйста, введите Ваши данные</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    @Html.ValidationSummary();
+    <h3>Имя</h3>
+    <div class="form-group">
+        <label>Ваше имя:</label>
+        @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+    </div>
+
+    <h3>Адрес доставки</h3>
+    foreach (var property in ViewData.ModelMetadata.Properties)
+    {
+        if (property.PropertyName != "Name" && property.PropertyName != "ExpeditedDelivery")
+        {
+            <div class="form-group">
+                <label>@(property.DisplayName ?? property.PropertyName)</label>
+                @Html.TextBox(property.PropertyName, null, new { @class = "form-control" })
+            </div>
+        }
+    }
+
+    <h3>Опции</h3>
+    <div class="form-group">
+        <label>
+            @Html.EditorFor(x => x.ExpeditedDelivery)
+            Ускоренная доставка
+        </label>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Обработать заказ" class="btn btn-default" />
+        </div>
+    </div>
+}
